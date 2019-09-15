@@ -6,10 +6,10 @@ import subprocess
 
 
 def createbackup():
-    command = ['/usr/bin/pg_basebackup', ' -X fetch --format=t -D - | bzip2 -9 > ~/backup-psql-$(date +%Y-%m-%d-%H-%M).tar.bz2'];
-    with subprocess.call(command) as proc:
-        log.write(proc.stdout.read())
-
+    command = ['/usr/bin/pg_basebackup', ' -X fetch --format=t -D -'];
+    ps =  subprocess.Popen(command, stdout=subprocess.PIPE)
+    output = subprocess.check_output(('bzip2', ' -9 > ~/backup-psql-$(date +%Y-%m-%d-%H-%M).tar.bz2'), stdin=ps.stdout)
+    ps.wait()
 
 def main():
     createbackup()
