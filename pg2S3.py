@@ -6,7 +6,7 @@ import subprocess
 
 
 def createbackup():
-    command = 'pg_basebackup -h localhost -D ~/backup/';
+    command = 'pg_basebackup -X fetch --format=t -D - | bzip2 -9 > ~/backup-psql-$(date +%Y-%m-%d-%H-%M).tar.bz2';
     with subprocess.Popen([command], stdout=subprocess.PIPE) as proc:
         log.write(proc.stdout.read())
 
