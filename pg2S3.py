@@ -7,7 +7,7 @@ import subprocess
 
 def createbackup():
     command = 'pg_basebackup -h localhost -D ~/backup/';
-    with subprocess.Popen([command], stdout=PIPE) as proc:
+    with subprocess.Popen([command], stdout=subprocess.PIPE) as proc:
         log.write(proc.stdout.read())
 
 
